@@ -9,7 +9,6 @@ public class Noeud {
 	private LinkedList<Noeud> cheminLePlusCourt = new LinkedList<>();
 	// La distance du noeud par rapport a la source
 	private Integer distance = Integer.MAX_VALUE;
-	// Cette map associe le s
 	Map<Noeud, Integer> noeudsAdjacents = new HashMap<>();
 	private boolean possedeBorne;
 

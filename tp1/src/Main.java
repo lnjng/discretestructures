@@ -17,21 +17,6 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		/*Graphe graphe = creerGraphe("centresLocaux.txt");
-		graphe = AlgorithmeDijkstra.caculerCheminLePlusCourtDeSource(graphe, noeudsParsed.get(0));
-		
-		Iterator<Noeud> it = graphe.obtenirNoeuds().iterator();
-		while (it.hasNext()) {
-			Noeud noeudDestination = it.next();
-			LinkedList<Noeud> cheminLePlusCourt = noeudDestination.obtenirCheminLePlusCourt();
-			System.out.println(noeudDestination.obtenirNom());
-			for(int i = 0 ; i < cheminLePlusCourt.size() ; i++) {
-			System.out.println(" -> " + cheminLePlusCourt.get(i).obtenirNom());
-			}
-			System.out.println(" -> " + noeudDestination.obtenirNom());
-			System.out.println("\n");
-		}*/
-		
 		
 		/////////////////// INTERFACE ///////////////////////
 		boolean quitter = false;
@@ -113,11 +98,11 @@ public class Main {
 	
 	public static LinkedList<Noeud> plusCourtChemin(String categorie, String origine, String destination){
 		LinkedList<Noeud> chemin = new LinkedList<Noeud>();
-		graphe.reinitialiserNoeuds();
+		//graphe.reinitialiserNoeuds();
 		Integer origineIndex = Integer.parseInt(origine);
 		//////// ICI CREER UN AUTRE GRAPHE POUR NE PAS MODIFIER GRAPHE D'ORIGINE??/////////
-		graphe = AlgorithmeDijkstra.caculerCheminLePlusCourtDeSource(graphe, noeudsParsed.get(origineIndex));
-		Noeud noeudDestination = graphe.obtenirNoeudSelonNumero(destination);
+		Graphe nouveauGraphe = AlgorithmeDijkstra.caculerCheminLePlusCourtDeSource(graphe, noeudsParsed.get(origineIndex));
+		Noeud noeudDestination = nouveauGraphe.obtenirNoeudSelonNumero(destination);
 		chemin = noeudDestination.obtenirCheminLePlusCourt();
 		return chemin;
 	}
@@ -147,6 +132,7 @@ public class Main {
 					    	int distanceArc = Integer.parseInt(infoAretes[2]);
 					    	int noeud2 = Integer.parseInt(infoAretes[1]);
 					    	noeudsParsed.get(noeud1-1).ajouterDestination(noeudsParsed.get(noeud2-1), distanceArc);
+					    	noeudsParsed.get(noeud2-1).ajouterDestination(noeudsParsed.get(noeud1-1), distanceArc);
 					    	line = br.readLine();
 					    }
 				} finally {
