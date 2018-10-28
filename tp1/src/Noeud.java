@@ -18,6 +18,10 @@ public class Noeud {
 		this.possedeBorne = possedeBorne;
 	}
 	
+	public void reinitialiserNoeud() {
+		this.distance = Integer.MAX_VALUE;
+	}
+	
 	public void ajouterDestination(Noeud destination, int distance){
 		this.noeudsAdjacents.put(destination, distance);
 	}
