@@ -132,7 +132,7 @@ public class Main {
 					    	int distanceArc = Integer.parseInt(infoAretes[2]);
 					    	int noeud2 = Integer.parseInt(infoAretes[1]);
 					    	noeudsParsed.get(noeud1-1).ajouterDestination(noeudsParsed.get(noeud2-1), distanceArc);
-					    	noeudsParsed.get(noeud2-1).ajouterDestination(noeudsParsed.get(noeud1-1), distanceArc);
+					    	//noeudsParsed.get(noeud2-1).ajouterDestination(noeudsParsed.get(noeud1-1), distanceArc);
 					    	line = br.readLine();
 					    }
 				} finally {
