@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,8 +8,8 @@ import java.io.IOException;
 public class Automata {
 	
 	private State m_s0;
-	private HashSet<String> m_words = new HashSet<String>();
-	private Queue<String> m_mostRecentWords = new Queue<String>();
+	private HashSet<String> m_words = new HashSet<String>(); // final states
+	private Queue<String> m_mostRecentWords = new LinkedList<String>();
 	
 	public Automata(String lexiconFileName) throws IOException
 	{

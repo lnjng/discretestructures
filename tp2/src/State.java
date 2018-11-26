@@ -1,14 +1,15 @@
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 public class State {
 	
 	private String m_value;
-	private HashSet<State> m_neighbouringStates;
-	bool i
+	private LinkedHashSet<Word> m_possibleWords = new LinkedHashSet<Word>();
+	private HashSet<State> m_nextStates = new HashSet<State>();
 	
-	public State(String letter, HashSet<State> neighbouringStates)
+	public State(String value)
 	{
-		m_value = letter;
-		m_neighbouringStates = neighbouringStates;
+		m_value = value;
+		
 	}
 }
