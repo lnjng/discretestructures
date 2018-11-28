@@ -6,6 +6,7 @@ public class State {
 	private String m_value;
 	private LinkedHashSet<Word> m_possibleWords = new LinkedHashSet<Word>();
 	private HashSet<State> m_nextStates = new HashSet<State>();
+	private boolean m_isWord = false;
 	
 	public State(String value)
 	{
@@ -15,6 +16,14 @@ public class State {
 	public String getValue()
 	{
 		return m_value;
+	}
+	
+	public void setIsWord(boolean isWord) {
+		m_isWord = isWord;
+	}
+	
+	public boolean getIsWord() {
+		return m_isWord;
 	}
 	
 	public void addNextState(State state) {

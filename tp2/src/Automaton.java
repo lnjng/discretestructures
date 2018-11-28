@@ -13,6 +13,8 @@ public class Automaton {
 	private HashSet<String> m_words = new HashSet<String>(); // final states
 	private Queue<String> m_mostRecentWords = new LinkedList<String>();
 	
+	private State currentState = m_root;
+	
 	public Automaton()
 	{
 	}
@@ -32,7 +34,14 @@ public class Automaton {
 					String strToAdd = sb.toString();
 					if (!m_statesList.contains(strToAdd)) 
 					{
-						m_root.addNextState(new State(strToAdd));
+						State newState = new State(strToAdd);
+						m_root.addNextState(newState);
+						
+						//if the state's value is the complete word, then it is a final state
+						if(newState.getValue().length() == word.length()) {
+							newState.setIsWord(true);
+						}
+						
 						//System.out.println(sb.toString());
 						m_statesList.add(strToAdd);
 					}
