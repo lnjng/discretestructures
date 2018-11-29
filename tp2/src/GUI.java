@@ -61,22 +61,23 @@ public class GUI extends JFrame implements KeyListener {
 			automaton.nextState(e.getKeyChar());
 			//showPossibleWords(automaton.getCurrentStatePossibleWords());
 		}*/
-		
-		String[] wordsSplitBySpace = textArea.getText().split(" ");
-		String[] wordsSplitByComma = wordsSplitBySpace[wordsSplitBySpace.length - 1].split(",");
-		String lastWord = wordsSplitByComma[wordsSplitByComma.length - 1];
-		
-		possibleWordsPane.setText(lastWord);
+
 
 		//possibleWordsPane.setText(automaton.getCurrentState().getValue());
 
 	}
 	/** Handle the key-pressed event from the text field. */
 	public void keyPressed(KeyEvent e) {
+
 	}
 	
 	/** Handle the key-released event from the text field. */
 	public void keyReleased(KeyEvent e) {
+		String[] wordsSplitBySpace = textArea.getText().split(" ");
+		String[] wordsSplitByComma = wordsSplitBySpace[wordsSplitBySpace.length - 1].split(",");
+		String lastWord = wordsSplitByComma[wordsSplitByComma.length - 1];
+		
+		possibleWordsPane.setText(lastWord);
 	}
 	  
 	public void showPossibleWords() {
