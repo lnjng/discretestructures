@@ -4,7 +4,7 @@ import java.util.LinkedHashSet;
 public class State {
 	
 	private String m_value;
-	private LinkedHashSet<Word> m_possibleWords = new LinkedHashSet<Word>();
+	//private LinkedHashSet<Word> m_possibleWords = new LinkedHashSet<Word>();
 	private HashSet<State> m_nextStates = new HashSet<State>();
 	private boolean m_isWord = false;
 	
@@ -39,5 +39,9 @@ public class State {
 			this.m_nextStates.add(state);
 		}
 
+	}
+	
+	public HashSet<State> getNextStates() {
+		return m_nextStates;
 	}
 }

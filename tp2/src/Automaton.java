@@ -10,10 +10,10 @@ public class Automaton {
 	private State m_root = new State("");
 	// pour eviter la recursitevite
 	private HashSet<String> m_statesList = new HashSet<String>();
-	private HashSet<String> m_words = new HashSet<String>(); // final states
+	private HashSet<Word> m_words = new HashSet<Word>(); // final states
 	private Queue<String> m_mostRecentWords = new LinkedList<String>();
 	
-	private State currentState = m_root;
+	private State m_currentState = m_root;
 	
 	public Automaton()
 	{
@@ -26,7 +26,7 @@ public class Automaton {
 		{
 			for(String word = br.readLine(); word != null; word = br.readLine()) 
 			{
-				m_words.add(word);
+				m_words.add(new Word(word));
 				StringBuilder sb = new StringBuilder();
 				for(int i = 0 ; i < word.length(); i++) 
 				{
@@ -59,5 +59,27 @@ public class Automaton {
 		
 	}
 	
+	public State getCurrentState() {
+		return m_currentState;
+	}
+	
+	public void nextState(char chr) {
+		for(State state : m_currentState.getNextStates()) {
+			if((m_currentState.getValue() + chr).equals(state.getValue())){
+				m_currentState = state;
+			}
+		}
+	}
+	
+	public void previousState() {
+		if(m_currentState == root) {
+			
+		}
+	}
+	
+	//idk encore pour linkedlist, well see
+	public LinkedList<State> getCurrentStatePossibleWords() {
+		return new LinkedList<State>();
+	}
 	
 }
