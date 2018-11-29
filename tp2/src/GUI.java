@@ -75,23 +75,31 @@ public class GUI extends JFrame implements KeyListener {
 	
 	/** Handle the key-released event from the text field. */
 	public void keyReleased(KeyEvent e) {
+		//split the text with " "
 		String[] wordsSplitBySpace = textArea.getText().split(" ");
+		//split the last string with "," to get the final word 
 		String[] wordsSplitByComma = wordsSplitBySpace[wordsSplitBySpace.length - 1].split(",");
+		//the last word is going to be the last one in the array
 		String lastWord = wordsSplitByComma[wordsSplitByComma.length - 1];
 		
+		//if there is a word that is not "empty"
 		if(lastWord.length() != 0) {
 			showPossibleWords(lastWord);			
 		}
+		//if it's empty, then show nothing
 		else {
 			possibleWordsPane.setText("");
 		}
-		//possibleWordsPane.setText(lastWord);
 	}
 	  
 	public void showPossibleWords(String word) {
+		//init the list of possible words
 		LinkedList<State> possibleWords = new LinkedList<State>();
+		//getting the state from the word passed in
 		State stateWanted = automaton.getStateFromValue(word);
+		//if the word is in the lexicon, then it isnt null
 		if(stateWanted != null) {
+			//get all the possible words from the stateWanted
 			stateWanted.getPossibleWords(possibleWords);
 			StringBuilder sb = new StringBuilder();
 			for(State state : possibleWords) {
@@ -100,7 +108,7 @@ public class GUI extends JFrame implements KeyListener {
 			}
 			possibleWordsPane.setText(sb.toString());
 		}
-
+		//if the word isnt in the lexicon, then show nothing
 		else {
 			possibleWordsPane.setText("");
 		}
