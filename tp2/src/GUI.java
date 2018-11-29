@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.LinkedList;
+
 import javax.swing.*;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
@@ -77,11 +79,31 @@ public class GUI extends JFrame implements KeyListener {
 		String[] wordsSplitByComma = wordsSplitBySpace[wordsSplitBySpace.length - 1].split(",");
 		String lastWord = wordsSplitByComma[wordsSplitByComma.length - 1];
 		
-		possibleWordsPane.setText(lastWord);
+		if(lastWord.length() != 0) {
+			showPossibleWords(lastWord);			
+		}
+		else {
+			possibleWordsPane.setText("");
+		}
+		//possibleWordsPane.setText(lastWord);
 	}
 	  
-	public void showPossibleWords() {
-		  
+	public void showPossibleWords(String word) {
+		LinkedList<State> possibleWords = new LinkedList<State>();
+		State stateWanted = automaton.getStateFromValue(word);
+		if(stateWanted != null) {
+			stateWanted.getPossibleWords(possibleWords);
+			StringBuilder sb = new StringBuilder();
+			for(State state : possibleWords) {
+				sb.append(state.getValue());
+				sb.append(" ");
+			}
+			possibleWordsPane.setText(sb.toString());
+		}
+
+		else {
+			possibleWordsPane.setText("");
+		}
 	}
 	  
 	public void actionPerformed(ActionEvent e) 

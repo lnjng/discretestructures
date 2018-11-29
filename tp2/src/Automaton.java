@@ -12,7 +12,7 @@ public class Automaton {
 	private HashSet<Word> m_words = new HashSet<Word>(); // final states
 	private Queue<String> m_mostRecentWords = new LinkedList<String>();
 	
-	private State m_currentState = m_root;
+	//private State m_currentState = m_root;
 	
 	public Automaton()
 	{
@@ -58,12 +58,14 @@ public class Automaton {
 		
 	}
 	
-	public State getCurrentState() {
-		return m_currentState;
-	}
-	
 	public State getStateFromValue(String value) {
 		return m_root.findStateFromValue(value);
+	}
+	
+	/*
+	 * 	
+	public State getCurrentState() {
+		return m_currentState;
 	}
 	
 	public void nextState(char chr) {
@@ -92,5 +94,5 @@ public class Automaton {
 	
 	public void reinitializeState() {
 		m_currentState = m_root;
-	}
+	}*/
 }
