@@ -6,6 +6,7 @@ public class main {
 		Automaton automate = new Automaton();
 		automate.generateTreeFromFile("resources/lexique 1.txt");
 		
+		State state = automate.getStateFromValue("cas");
 		new GUI(automate);
 	}
 

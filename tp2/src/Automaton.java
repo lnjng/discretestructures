@@ -8,7 +8,6 @@ import java.io.IOException;
 public class Automaton {
 	
 	private State m_root = new State("");
-	// pour eviter la recursitevite
 	private HashSet<String> m_statesList = new HashSet<String>();
 	private HashSet<Word> m_words = new HashSet<Word>(); // final states
 	private Queue<String> m_mostRecentWords = new LinkedList<String>();
@@ -68,10 +67,15 @@ public class Automaton {
 	}
 	
 	public void nextState(char chr) {
+		String previousValue = m_currentState.getValue();
 		for(State state : m_currentState.getNextStates()) {
 			if((m_currentState.getValue() + chr).equals(state.getValue())){
 				m_currentState = state;
 			}
+		}
+		
+		if(m_currentState.getValue().equals(previousValue)){
+			
 		}
 	}
 	

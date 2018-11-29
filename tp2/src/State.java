@@ -53,6 +53,8 @@ public class State {
 		else if(this.getValue().equals(value.substring(0, this.getValue().length()))) {
 			for(State state : m_nextStates) {
 				stateWanted = state.findStateFromValue(value);
+				if(stateWanted != null)
+					break;
 			}
 		}
 		return stateWanted;
