@@ -1,5 +1,6 @@
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 public class State {
 	
@@ -58,5 +59,14 @@ public class State {
 			}
 		}
 		return stateWanted;
+	}
+	
+	public void getPossibleWords(LinkedList<State> possibleWords){
+		if(this.m_isWord) {
+			possibleWords.add(this);
+		}
+		for(State state : m_nextStates) {
+			state.getPossibleWords(possibleWords);
+		}
 	}
 }
