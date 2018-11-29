@@ -50,7 +50,7 @@ public class GUI extends JFrame implements KeyListener {
 	}
 	  
 	public void keyTyped(KeyEvent e) {
-		if(e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
+		/*if(e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
 			automaton.previousState();
 			
 		}
@@ -60,8 +60,15 @@ public class GUI extends JFrame implements KeyListener {
 		else {
 			automaton.nextState(e.getKeyChar());
 			//showPossibleWords(automaton.getCurrentStatePossibleWords());
-		}
-		possibleWordsPane.setText(automaton.getCurrentState().getValue());
+		}*/
+		
+		String[] wordsSplitBySpace = textArea.getText().split(" ");
+		String[] wordsSplitByComma = wordsSplitBySpace[wordsSplitBySpace.length - 1].split(",");
+		String lastWord = wordsSplitByComma[wordsSplitByComma.length - 1];
+		
+		possibleWordsPane.setText(lastWord);
+
+		//possibleWordsPane.setText(automaton.getCurrentState().getValue());
 
 	}
 	/** Handle the key-pressed event from the text field. */
