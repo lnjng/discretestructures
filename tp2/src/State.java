@@ -44,4 +44,17 @@ public class State {
 	public HashSet<State> getNextStates() {
 		return m_nextStates;
 	}
+	
+	public State findStateFromValue(String value) {
+		State stateWanted = null;
+		if(this.getValue().equals(value)) {
+			stateWanted = this;
+		}
+		else if(this.getValue().equals(value.substring(0, this.getValue().length()))) {
+			for(State state : m_nextStates) {
+				stateWanted = state.findStateFromValue(value);
+			}
+		}
+		return stateWanted;
+	}
 }

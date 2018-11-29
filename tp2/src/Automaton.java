@@ -63,6 +63,10 @@ public class Automaton {
 		return m_currentState;
 	}
 	
+	public State getStateFromValue(String value) {
+		return m_root.findStateFromValue(value);
+	}
+	
 	public void nextState(char chr) {
 		for(State state : m_currentState.getNextStates()) {
 			if((m_currentState.getValue() + chr).equals(state.getValue())){
@@ -73,9 +77,7 @@ public class Automaton {
 	
 	public void previousState() {
 		if(m_currentState != m_root) {
-			for(State state : m_statesList) {
-				
-			}
+			m_currentState = this.getStateFromValue(m_currentState.getValue().substring(0, m_currentState.getValue().length() - 1));
 		}
 	}
 	

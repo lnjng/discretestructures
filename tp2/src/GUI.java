@@ -50,8 +50,9 @@ public class GUI extends JFrame implements KeyListener {
 	}
 	  
 	public void keyTyped(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_DELETE) {
+		if(e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
 			automaton.previousState();
+			
 		}
 		else if(e.getKeyChar() == ' ' || e.getKeyChar() == ','){
 			automaton.reinitializeState();
@@ -59,8 +60,9 @@ public class GUI extends JFrame implements KeyListener {
 		else {
 			automaton.nextState(e.getKeyChar());
 			//showPossibleWords(automaton.getCurrentStatePossibleWords());
-			possibleWordsPane.setText(automaton.getCurrentState().getValue());
 		}
+		possibleWordsPane.setText(automaton.getCurrentState().getValue());
+
 	}
 	/** Handle the key-pressed event from the text field. */
 	public void keyPressed(KeyEvent e) {
