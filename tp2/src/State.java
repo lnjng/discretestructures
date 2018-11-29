@@ -8,6 +8,8 @@ public class State {
 	//private LinkedHashSet<Word> m_possibleWords = new LinkedHashSet<Word>();
 	private HashSet<State> m_nextStates = new HashSet<State>();
 	private boolean m_isWord = false;
+	private int m_timesUsed = 0;
+	private int m_isRecent = 0;
 	
 	public State(String value)
 	{
@@ -64,9 +66,26 @@ public class State {
 	public void getPossibleWords(LinkedList<State> possibleWords){
 		if(this.m_isWord) {
 			possibleWords.add(this);
+			
 		}
 		for(State state : m_nextStates) {
 			state.getPossibleWords(possibleWords);
 		}
+	}
+	
+	public void incrementTimesUsed() {
+		m_timesUsed++;
+	}
+	
+	public int getTimesUsed() {
+		return m_timesUsed;
+	}
+	
+	public void setIsRecent(int recent) {
+		m_isRecent = recent;
+	}
+	
+	public int getIsRecent() {
+		return m_isRecent;
 	}
 }

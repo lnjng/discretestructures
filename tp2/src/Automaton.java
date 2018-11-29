@@ -1,6 +1,6 @@
+import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Queue;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,8 +9,8 @@ public class Automaton {
 	
 	private State m_root = new State("");
 	private HashSet<String> m_statesList = new HashSet<String>();
-	private HashSet<Word> m_words = new HashSet<Word>(); // final states
-	private Queue<String> m_mostRecentWords = new LinkedList<String>();
+	private HashSet<String> m_words = new HashSet<String>(); // final states
+	private ArrayDeque<String> m_mostRecentWords = new ArrayDeque<String>(5);
 	
 	//private State m_currentState = m_root;
 	
@@ -25,7 +25,7 @@ public class Automaton {
 		{
 			for(String word = br.readLine(); word != null; word = br.readLine()) 
 			{
-				m_words.add(new Word(word));
+				m_words.add(word);
 				StringBuilder sb = new StringBuilder();
 				for(int i = 0 ; i < word.length(); i++) 
 				{
@@ -62,6 +62,30 @@ public class Automaton {
 		return m_root.findStateFromValue(value);
 	}
 	
+	// Method used specifically when we want to know if the last word written is
+	// a word in the lexicon (in GUI). The word is then "recognized", and the labels
+	// are updated.
+	public void addToLastUsedWords(String lastUsedWord) {
+		// polls and removes recent state
+		if (m_mostRecentWords.size() == 5) {
+			String wordPolled = m_mostRecentWords.poll();
+			getStateFromValue(wordPolled).setIsRecent(0);
+		}
+		m_mostRecentWords.add(lastUsedWord);
+		this.getStateFromValue(lastUsedWord).setIsRecent(1);
+		// pas le meilleur endroit pour le mettre
+		this.getStateFromValue(lastUsedWord).incrementTimesUsed();
+		
+	}
+	
+	
+	public HashSet<String> getLexiconWords() {
+		return m_words;
+	}
+	
+	public ArrayDeque<String> getMostRecentWords(){
+		return m_mostRecentWords;
+	}
 	/*
 	 * 	
 	public State getCurrentState() {
