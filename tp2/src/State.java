@@ -30,7 +30,7 @@ public class State {
 		
 		for(State nextState : m_nextStates) {
 			//compare le value du this state avec les this.value.length() premiers lettres de state.value
-			if((state.getValue().substring(0, nextState.getValue().length())).equals(nextState.getValue())){
+			if(state.getValue().substring(0, nextState.getValue().length()).equals(nextState.getValue())){
 				nextState.addNextState(state);
 			}
 		}

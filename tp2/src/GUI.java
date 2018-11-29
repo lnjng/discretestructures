@@ -53,6 +53,9 @@ public class GUI extends JFrame implements KeyListener {
 		if(e.getKeyCode() == KeyEvent.VK_DELETE) {
 			automaton.previousState();
 		}
+		else if(e.getKeyChar() == ' ' || e.getKeyChar() == ','){
+			automaton.reinitializeState();
+		}
 		else {
 			automaton.nextState(e.getKeyChar());
 			//showPossibleWords(automaton.getCurrentStatePossibleWords());

@@ -72,8 +72,10 @@ public class Automaton {
 	}
 	
 	public void previousState() {
-		if(m_currentState == root) {
-			
+		if(m_currentState != m_root) {
+			for(State state : m_statesList) {
+				
+			}
 		}
 	}
 	
@@ -82,4 +84,7 @@ public class Automaton {
 		return new LinkedList<State>();
 	}
 	
+	public void reinitializeState() {
+		m_currentState = m_root;
+	}
 }
