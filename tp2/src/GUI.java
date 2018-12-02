@@ -53,7 +53,7 @@ public class GUI extends JFrame implements KeyListener {
 	        public void actionPerformed(java.awt.event.ActionEvent evt) {
 	            String wordWanted = pu.showInputDialog(container,
 	                    "Entrez le mot", null);
-	            showLabels(wordWanted);
+	            showLabels(wordWanted, container);
 	            
 	        }
         });
@@ -65,8 +65,7 @@ public class GUI extends JFrame implements KeyListener {
 	}
 	
 	//////
-	public void showLabels(String word) {
-		JFrame frame = new JFrame("Input Dialog Example 3");
+	public void showLabels(String word, Container frame) {
 		State stateWord = automaton.getStateFromValue(word);
 	    JOptionPane.showMessageDialog(frame, 
 	        "Nombre de fois utilise : " + stateWord.getTimesUsed() + " \n Recemment utilise : " + stateWord.getIsRecent(),
@@ -90,7 +89,7 @@ public class GUI extends JFrame implements KeyListener {
 		
 		// if the user is not backspacing
 		if(!(e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
-			
+			/*
 			//split the text with " "
 			String[] wordsSplitBySpace = textArea.getText().split(" ");
 			//split the last string with "," to get the final word 
@@ -98,7 +97,11 @@ public class GUI extends JFrame implements KeyListener {
 			//the last word is going to be the last one in the array
 			String lastWord = wordsSplitByComma[wordsSplitByComma.length - 1];
 			
-
+*/
+			String[] wordsSplitByPunc = textArea.getText().split("([.,!?:;'\"-]|\\s)+");
+			String lastWord = wordsSplitByPunc[wordsSplitByPunc.length - 1];
+			//possibleWordsPane.setText(lastWord);
+			
 			// if the the word is a recognized word, words are only recognized the moment a comma or a space follows
 			if (automaton.getLexiconWords().contains(lastWord) && (e.getKeyChar() == ',' || e.getKeyChar() == ' ')) {
 			
