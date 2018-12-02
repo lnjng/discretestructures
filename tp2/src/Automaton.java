@@ -74,7 +74,7 @@ public class Automaton {
 		m_mostRecentWords.add(lastUsedWord);
 		this.getStateFromValue(lastUsedWord).setIsRecent(1);
 		// pas le meilleur endroit pour le mettre
-		this.getStateFromValue(lastUsedWord).incrementTimesUsed();
+		//this.getStateFromValue(lastUsedWord).incrementTimesUsed();
 		
 	}
 	
@@ -86,37 +86,5 @@ public class Automaton {
 	public ArrayDeque<String> getMostRecentWords(){
 		return m_mostRecentWords;
 	}
-	/*
-	 * 	
-	public State getCurrentState() {
-		return m_currentState;
-	}
-	
-	public void nextState(char chr) {
-		String previousValue = m_currentState.getValue();
-		for(State state : m_currentState.getNextStates()) {
-			if((m_currentState.getValue() + chr).equals(state.getValue())){
-				m_currentState = state;
-			}
-		}
-		
-		if(m_currentState.getValue().equals(previousValue)){
-			
-		}
-	}
-	
-	public void previousState() {
-		if(m_currentState != m_root) {
-			m_currentState = this.getStateFromValue(m_currentState.getValue().substring(0, m_currentState.getValue().length() - 1));
-		}
-	}
-	
-	//idk encore pour linkedlist, well see
-	public LinkedList<State> getCurrentStatePossibleWords() {
-		return new LinkedList<State>();
-	}
-	
-	public void reinitializeState() {
-		m_currentState = m_root;
-	}*/
+
 }

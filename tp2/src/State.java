@@ -5,7 +5,6 @@ import java.util.LinkedList;
 public class State {
 	
 	private String m_value;
-	//private LinkedHashSet<Word> m_possibleWords = new LinkedHashSet<Word>();
 	private HashSet<State> m_nextStates = new HashSet<State>();
 	private boolean m_isWord = false;
 	private int m_timesUsed = 0;

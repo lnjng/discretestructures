@@ -8,9 +8,7 @@ import javax.swing.plaf.metal.OceanTheme;
 
 public class GUI extends JFrame implements KeyListener {
 	
-	
-	
-	  //private JPanel panel;
+	 //private JPanel panel;
 	private JMenuBar menuBar;
 	private JTextArea textArea;
 	private JScrollPane scrollTextPane;
@@ -76,76 +74,106 @@ public class GUI extends JFrame implements KeyListener {
 	        JOptionPane.QUESTION_MESSAGE, 
 	        null);
 	}
-	//////
+
 	public void keyTyped(KeyEvent e) {
-		/*if(e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
-			automaton.previousState();
-			
-		}
-		else if(e.getKeyChar() == ' ' || e.getKeyChar() == ','){
-			automaton.reinitializeState();
-		}
-		else {
-			automaton.nextState(e.getKeyChar());
-			//showPossibleWords(automaton.getCurrentStatePossibleWords());
-		}*/
-									
-					
+
 	}
+	
 	/** Handle the key-pressed event from the text field. */
 	public void keyPressed(KeyEvent e) {
-
 	}
-	
-	static void swapReferences(int[] array, int a, int b){
-	     int x = array[a];
-	     array[a] = array[b];
-	     array[b] = x;
 
-	 }
 	
-
 	
 	/** Handle the key-released event from the text field. */
 	public void keyReleased(KeyEvent e) {
+		
+		// if the user is not backspacing
+		if(!(e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
+			
+			//split the text with " "
+			String[] wordsSplitBySpace = textArea.getText().split(" ");
+			//split the last string with "," to get the final word 
+			String[] wordsSplitByComma = wordsSplitBySpace[wordsSplitBySpace.length - 1].split(",");
+			//the last word is going to be the last one in the array
+			String lastWord = wordsSplitByComma[wordsSplitByComma.length - 1];
+			
 
-		//split the text with " "
-				String[] wordsSplitBySpace = textArea.getText().split(" ");
-				//split the last string with "," to get the final word 
-				String[] wordsSplitByComma = wordsSplitBySpace[wordsSplitBySpace.length - 1].split(",");
-				//the last word is going to be the last one in the array
-				String lastWord = wordsSplitByComma[wordsSplitByComma.length - 1];
-				
-
-				// if the the word is a recognized word
-				if (automaton.getLexiconWords().contains(lastWord) && e.getKeyChar() != ',' && e.getKeyChar() != ' ') {
+			// if the the word is a recognized word, words are only recognized the moment a comma or a space follows
+			if (automaton.getLexiconWords().contains(lastWord) && (e.getKeyChar() == ',' || e.getKeyChar() == ' ')) {
+			
+				// if the word is recent
+				if (automaton.getMostRecentWords().contains(lastWord)) {
 					
-					// if the word is recent
-					if (automaton.getMostRecentWords().contains(lastWord)) {
-						//swapReferences(automaton.getMostRecentWords().peek(), ,automaton.getMostRecentWords())
-						automaton.getStateFromValue(lastWord).incrementTimesUsed();
+					
+					// the word moves up in the arrayqueue..
+					Object[] tempArray = automaton.getMostRecentWords().toArray();
+					int index = 0;
+					for (int i = 0 ; i < tempArray.length ; i++) {
+						if (tempArray[i].equals(lastWord)) {
+							index = i;
+							break;
+						}
+					}
+					swapReferences(tempArray, tempArray.length - 1 , index);
+					
+					
+					for(int i = index; i != tempArray.length-2; i++) {
+						swapReferences(tempArray, i, i+1);
 					}
 					
-					// if the word isn't recent
-					else {
-						automaton.addToLastUsedWords(lastWord);
-
-						
+					automaton.getMostRecentWords().clear();
+					for (Object word : tempArray) {
+						automaton.getMostRecentWords().add((String) word);
 					}
-					
-					//automaton.getStateFromValue(lastWord).incrementTimesUsed();
+					// end percolating objects and transferring to the top of the q
 					
 				}
 				
-				//if there is a word that is not "empty"
-				if(lastWord.length() != 0) {
-					showPossibleWords(lastWord);
-				}
-				//if it's empty, then show nothing
+				// if the word isn't recent
 				else {
-					possibleWordsPane.setText("");
+					automaton.addToLastUsedWords(lastWord);
 				}
+				
+				automaton.getStateFromValue(lastWord).incrementTimesUsed();
+				
+			}
+			
+			
+			
+			if(lastWord.length() != 0) {
+				showPossibleWords(lastWord);
+			}
+			//if it's empty, then show nothing
+			else {
+				possibleWordsPane.setText("");
+			}
+					
+			
+		}
+		
+		// backspacing removes suggestions
+		else {
+			possibleWordsPane.setText("");
+		}
+		
+		
+
+
+				
 	}
+	
+	
+  static void swapReferences(Object[] array, int a, int b){
+	     Object x = array[a];
+	     array[a] = array[b];
+	     array[b] = x;
+
+	}
+
+	
+	
+	
 	  
 	public void showPossibleWords(String word) {
 		//init the list of possible words
