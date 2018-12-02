@@ -103,7 +103,7 @@ public class GUI extends JFrame implements KeyListener {
 			//possibleWordsPane.setText(lastWord);
 			
 			// if the the word is a recognized word, words are only recognized the moment a comma or a space follows
-			if (automaton.getLexiconWords().contains(lastWord) && (e.getKeyChar() == ',' || e.getKeyChar() == ' ')) {
+			if (automaton.getLexiconWords().contains(lastWord)) {
 			
 				// if the word is recent
 				if (automaton.getMostRecentWords().contains(lastWord)) {
