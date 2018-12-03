@@ -112,8 +112,17 @@ public class Automaton {
 		if (m_mostRecentWords.size() == 5) {
 			String wordPolled = m_mostRecentWords.poll();
 			getStateFromValue(wordPolled).setIsRecent(0);
+			///////////
+			System.out.println(wordPolled + " set to non recent \n");
+			/////////
 		}
 		m_mostRecentWords.add(lastUsedWord);
 		this.getStateFromValue(lastUsedWord).setIsRecent(1);
+		
+		////////////////////
+		System.out.println(lastUsedWord + " set to recent \n");
+		
+		System.out.print("size of mostRecentWords: " + m_mostRecentWords.size() + "\n");
+		//////////////////
 	}
 }
