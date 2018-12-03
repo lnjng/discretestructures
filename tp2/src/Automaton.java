@@ -19,10 +19,20 @@ public class Automaton {
 	private HashSet<String> m_words = new HashSet<String>(); // final states
 	private ArrayDeque<String> m_mostRecentWords = new ArrayDeque<String>(5);
 		
+	/***
+	 * Constructor
+	 */
 	public Automaton()
 	{
 	}
 	
+	/***
+	 * Method that takes a file name as a param and read the file
+	 * to build an automaton from it
+	 * 
+	 * @param fileName
+	 * @throws IOException
+	 */
 	public void generateTreeFromFile(String fileName) throws IOException
 	{
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -62,6 +72,13 @@ public class Automaton {
 		
 	}
 	
+	/***
+	 * returns an State object that has the m_value
+	 * of param value
+	 * 
+	 * @param value
+	 * @return
+	 */
 	public State getStateFromValue(String value) {
 		return m_root.findStateFromValue(value);
 	}
@@ -82,10 +99,18 @@ public class Automaton {
 		
 	}
 	
+	/***
+	 * returns all the complete words in String (m_words)
+	 * @return
+	 */
 	public HashSet<String> getLexiconWords() {
 		return m_words;
 	}
 	
+	/***
+	 * return the 5 most recent words that the user has written
+	 * @return
+	 */
 	public ArrayDeque<String> getMostRecentWords(){
 		return m_mostRecentWords;
 	}
