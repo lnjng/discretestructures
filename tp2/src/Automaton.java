@@ -83,21 +83,6 @@ public class Automaton {
 		return m_root.findStateFromValue(value);
 	}
 	
-	// Method used specifically when we want to know if the last word written is
-	// a word in the lexicon (in GUI). The word is then "recognized", and the labels
-	// are updated.
-	public void addToLastUsedWords(String lastUsedWord) {
-		// polls and removes recent state
-		if (m_mostRecentWords.size() == 5) {
-			String wordPolled = m_mostRecentWords.poll();
-			getStateFromValue(wordPolled).setIsRecent(0);
-		}
-		m_mostRecentWords.add(lastUsedWord);
-		this.getStateFromValue(lastUsedWord).setIsRecent(1);
-		// pas le meilleur endroit pour le mettre
-		//this.getStateFromValue(lastUsedWord).incrementTimesUsed();
-		
-	}
 	
 	/***
 	 * returns all the complete words in String (m_words)
@@ -114,5 +99,21 @@ public class Automaton {
 	public ArrayDeque<String> getMostRecentWords(){
 		return m_mostRecentWords;
 	}
+	
+	/**
+	 * Method used specifically when we want to know if the last word written is
+	 * a word in the lexicon (in GUI). The word is then "recognized", and the labels
+	 * are updated.
+	 * @param lastUsedWord
+	 */
 
+	public void addToLastUsedWords(String lastUsedWord) {
+		// polls and removes recent state
+		if (m_mostRecentWords.size() == 5) {
+			String wordPolled = m_mostRecentWords.poll();
+			getStateFromValue(wordPolled).setIsRecent(0);
+		}
+		m_mostRecentWords.add(lastUsedWord);
+		this.getStateFromValue(lastUsedWord).setIsRecent(1);
+	}
 }
