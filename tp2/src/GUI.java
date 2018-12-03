@@ -20,13 +20,19 @@ public class GUI extends JFrame implements KeyListener {
 	private JScrollPane scrollPossibleWordsPane;
 	private Automaton automaton;
 	  
-	public GUI(Automaton lex){		  
+	/***
+	 * constructor
+	 * @param lex
+	 */
+	public GUI(Automaton lex){		
+		//window
 		super("Éditeur de texte");
 		setSize(750, 750);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container container = this.getContentPane();
 		container.setLayout(new BorderLayout());
 		  
+		//text area
 		textArea = new JTextArea();
 		textArea.setFont(new Font("Arial", 0, 24));
 		textArea.setLineWrap(true);
@@ -34,7 +40,8 @@ public class GUI extends JFrame implements KeyListener {
 		textArea.addKeyListener(this);
 		scrollTextPane = new JScrollPane(textArea);
 		container.add(scrollTextPane);
-		  
+		
+		//lower bar that contains all the possible words
 		possibleWordsPane = new JTextField("mots possibles ici");
 		possibleWordsPane.setFont(new Font("Arial",0, 22));
 		possibleWordsPane.setLayout(new GridLayout(0,1));
@@ -43,6 +50,7 @@ public class GUI extends JFrame implements KeyListener {
 		scrollPossibleWordsPane.getHorizontalScrollBar().setPreferredSize(new Dimension(0,0));
 		container.add(scrollPossibleWordsPane, BorderLayout.SOUTH);
 		  	
+		//button that can be used to show the labels of a word
         JButton button = new JButton();
         button.setText("Trouver les labels d'un mot");
         JOptionPane pu = new JOptionPane();
@@ -55,13 +63,19 @@ public class GUI extends JFrame implements KeyListener {
 	            
 	        }
         });
-        
         container.add(button, BorderLayout.NORTH);
+        
 		automaton = lex;
-		this.setVisible(true);
-		  
+		this.setVisible(true);	  
 	}
 	
+	/***
+	 * pop-up in which it shows the labels of a word,
+	 * if the word exists
+	 * 
+	 * @param word
+	 * @param frame
+	 */
 	public void showLabels(String word, Container frame) {
 		State stateWord = automaton.getStateFromValue(word);
 	    JOptionPane.showMessageDialog(frame, 
@@ -71,12 +85,28 @@ public class GUI extends JFrame implements KeyListener {
 	        null);
 	}
 
+	/***
+	 * event listener who handles when a key
+	 * is typed
+	 */
 	public void keyTyped(KeyEvent e) {
 	}
 	
+	/***
+	 * event listener who handles when a key is
+	 * pressed
+	 */
 	public void keyPressed(KeyEvent e) {
 	}
 	
+	/***
+	 * event listener who handles when a key
+	 * is released. When a key is released, it
+	 * changes the label of a word if necessary, and updates
+	 * the display of the lower bar that shows the possible
+	 * words.
+	 * 
+	 */
 	public void keyReleased(KeyEvent e) {
 		// if the user is not backspacing
 		if(!(e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
@@ -132,14 +162,24 @@ public class GUI extends JFrame implements KeyListener {
 		}	
 	}
 	
-	
-  static void swapReferences(Object[] array, int a, int b){
+	/**
+	 * swap references between to elements in an array
+	 * @param array
+	 * @param a
+	 * @param b
+	 */
+	static void swapReferences(Object[] array, int a, int b){
 	     Object x = array[a];
 	     array[a] = array[b];
 	     array[b] = x;
 
 	}
 	  
+	/**
+	 * changes the display of the lower bar that shows the possible
+	 * words from the user's input 
+	 * @param word
+	 */
 	public void showPossibleWords(String word) {
 		//init the list of possible words
 		LinkedList<State> possibleWords = new LinkedList<State>();
