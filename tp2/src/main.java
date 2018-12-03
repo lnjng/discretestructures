@@ -1,3 +1,11 @@
+/***
+ * main file
+ * 
+ * @author dihn, huyen trang 1846776
+ * 			jiang, helene 1854909
+ *
+ */
+
 import java.io.IOException;
 
 public class main {

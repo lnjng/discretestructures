@@ -1,6 +1,13 @@
+/***
+ * Automaton class
+ * 
+ * @author dihn, huyen trang 1846776
+ * 			jiang, helene 1854909
+ *
+ */
+
 import java.util.ArrayDeque;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,9 +18,7 @@ public class Automaton {
 	private HashSet<String> m_statesList = new HashSet<String>();
 	private HashSet<String> m_words = new HashSet<String>(); // final states
 	private ArrayDeque<String> m_mostRecentWords = new ArrayDeque<String>(5);
-	
-	//private State m_currentState = m_root;
-	
+		
 	public Automaton()
 	{
 	}
@@ -41,7 +46,6 @@ public class Automaton {
 							newState.setIsWord(true);
 						}
 						
-						//System.out.println(sb.toString());
 						m_statesList.add(strToAdd);
 					}
 				}
@@ -77,7 +81,6 @@ public class Automaton {
 		//this.getStateFromValue(lastUsedWord).incrementTimesUsed();
 		
 	}
-	
 	
 	public HashSet<String> getLexiconWords() {
 		return m_words;

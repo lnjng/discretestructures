@@ -1,5 +1,12 @@
+/***
+ * State class
+ * 
+ * @author dihn, huyen trang 1846776
+ * 			jiang, helene 1854909
+ *
+ */
+
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 public class State {

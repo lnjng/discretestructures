@@ -1,14 +1,18 @@
+/***
+ * GUI class
+ * 
+ * @author dihn, huyen trang 1846776
+ * 			jiang, helene 1854909
+ *
+ */
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedList;
-
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.plaf.metal.OceanTheme;
 
 public class GUI extends JFrame implements KeyListener {
 	
-	 //private JPanel panel;
 	private JMenuBar menuBar;
 	private JTextArea textArea;
 	private JScrollPane scrollTextPane;
@@ -22,8 +26,6 @@ public class GUI extends JFrame implements KeyListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container container = this.getContentPane();
 		container.setLayout(new BorderLayout());
-		//panel = new JPanel();
-		//container.add(panel);
 		  
 		textArea = new JTextArea();
 		textArea.setFont(new Font("Arial", 0, 24));
@@ -33,9 +35,6 @@ public class GUI extends JFrame implements KeyListener {
 		scrollTextPane = new JScrollPane(textArea);
 		container.add(scrollTextPane);
 		  
-		//oo boi
-		//InputMap inputSpaceBar = new InputMap();
-		  
 		possibleWordsPane = new JTextField("mots possibles ici");
 		possibleWordsPane.setFont(new Font("Arial",0, 22));
 		possibleWordsPane.setLayout(new GridLayout(0,1));
@@ -43,8 +42,7 @@ public class GUI extends JFrame implements KeyListener {
 		scrollPossibleWordsPane = new JScrollPane(possibleWordsPane);
 		scrollPossibleWordsPane.getHorizontalScrollBar().setPreferredSize(new Dimension(0,0));
 		container.add(scrollPossibleWordsPane, BorderLayout.SOUTH);
-		  
-		
+		  	
         JButton button = new JButton();
         button.setText("Trouver les labels d'un mot");
         JOptionPane pu = new JOptionPane();
@@ -64,7 +62,6 @@ public class GUI extends JFrame implements KeyListener {
 		  
 	}
 	
-	//////
 	public void showLabels(String word, Container frame) {
 		State stateWord = automaton.getStateFromValue(word);
 	    JOptionPane.showMessageDialog(frame, 
@@ -75,39 +72,22 @@ public class GUI extends JFrame implements KeyListener {
 	}
 
 	public void keyTyped(KeyEvent e) {
-
 	}
 	
-	/** Handle the key-pressed event from the text field. */
 	public void keyPressed(KeyEvent e) {
 	}
-
 	
-	
-	/** Handle the key-released event from the text field. */
 	public void keyReleased(KeyEvent e) {
-		
 		// if the user is not backspacing
 		if(!(e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
-			/*
-			//split the text with " "
-			String[] wordsSplitBySpace = textArea.getText().split(" ");
-			//split the last string with "," to get the final word 
-			String[] wordsSplitByComma = wordsSplitBySpace[wordsSplitBySpace.length - 1].split(",");
-			//the last word is going to be the last one in the array
-			String lastWord = wordsSplitByComma[wordsSplitByComma.length - 1];
-			
-*/
 			String[] wordsSplitByPunc = textArea.getText().split("([.,!?:;'\"-]|\\s)+");
 			String lastWord = wordsSplitByPunc[wordsSplitByPunc.length - 1];
-			//possibleWordsPane.setText(lastWord);
 			
 			// if the the word is a recognized word, words are only recognized the moment a comma or a space follows
 			if (automaton.getLexiconWords().contains(lastWord)) {
 			
 				// if the word is recent
 				if (automaton.getMostRecentWords().contains(lastWord)) {
-					
 					
 					// the word moves up in the arrayqueue..
 					Object[] tempArray = automaton.getMostRecentWords().toArray();
@@ -119,30 +99,23 @@ public class GUI extends JFrame implements KeyListener {
 						}
 					}
 					swapReferences(tempArray, tempArray.length - 1 , index);
-					
-					
+
 					for(int i = index; i != tempArray.length-2; i++) {
 						swapReferences(tempArray, i, i+1);
 					}
-					
 					automaton.getMostRecentWords().clear();
 					for (Object word : tempArray) {
 						automaton.getMostRecentWords().add((String) word);
 					}
 					// end percolating objects and transferring to the top of the q
-					
 				}
 				
 				// if the word isn't recent
 				else {
 					automaton.addToLastUsedWords(lastWord);
-				}
-				
-				automaton.getStateFromValue(lastWord).incrementTimesUsed();
-				
-			}
-			
-			
+				}			
+				automaton.getStateFromValue(lastWord).incrementTimesUsed();		
+			}	
 			
 			if(lastWord.length() != 0) {
 				showPossibleWords(lastWord);
@@ -151,19 +124,12 @@ public class GUI extends JFrame implements KeyListener {
 			else {
 				possibleWordsPane.setText("");
 			}
-					
 			
 		}
-		
 		// backspacing removes suggestions
 		else {
 			possibleWordsPane.setText("");
-		}
-		
-		
-
-
-				
+		}	
 	}
 	
 	
@@ -173,10 +139,6 @@ public class GUI extends JFrame implements KeyListener {
 	     array[b] = x;
 
 	}
-
-	
-	
-	
 	  
 	public void showPossibleWords(String word) {
 		//init the list of possible words
@@ -198,10 +160,5 @@ public class GUI extends JFrame implements KeyListener {
 		else {
 			possibleWordsPane.setText("");
 		}
-	}
-	  
-	public void actionPerformed(ActionEvent e) 
-	{
-	
 	}
 }
