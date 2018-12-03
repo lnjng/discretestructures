@@ -17,24 +17,45 @@ public class State {
 	private int m_timesUsed = 0;
 	private int m_isRecent = 0;
 	
+	/***
+	 * Constructor
+	 * @param value
+	 */
 	public State(String value)
 	{
 		m_value = value;
 	}
 	
+	/***
+	 * returns value of m_value
+	 * @return
+	 */
 	public String getValue()
 	{
 		return m_value;
 	}
 	
+	/***
+	 * sets the boolean attribute isWord to param isWord
+	 * @param isWord
+	 */
 	public void setIsWord(boolean isWord) {
 		m_isWord = isWord;
 	}
 	
+	/***
+	 * returns value of m_isWord
+	 * @return
+	 */
 	public boolean getIsWord() {
 		return m_isWord;
 	}
 	
+	/***
+	 * recursive method in which it adds param state to m_nextStates if it
+	 * really is a next state of this
+	 * @param state
+	 */
 	public void addNextState(State state) {
 		
 		for(State nextState : m_nextStates) {
@@ -50,10 +71,20 @@ public class State {
 
 	}
 	
+	/***
+	 * returns m_nextStates
+	 * @return
+	 */
 	public HashSet<State> getNextStates() {
 		return m_nextStates;
 	}
 	
+	/***
+	 * recursive method that finds a state with its
+	 * String value and returns it
+	 * @param value
+	 * @return
+	 */
 	public State findStateFromValue(String value) {
 		State stateWanted = null;
 		if(this.getValue().equals(value)) {
@@ -69,6 +100,11 @@ public class State {
 		return stateWanted;
 	}
 	
+	/***
+	 * recursive method that finds all the possible complete words (final states)
+	 * of a certain state. puts all those final states in a LinkedList
+	 * @param possibleWords
+	 */
 	public void getPossibleWords(LinkedList<State> possibleWords){
 		if(this.m_isWord) {
 			possibleWords.add(this);
@@ -79,18 +115,33 @@ public class State {
 		}
 	}
 	
+	/***
+	 * increments m_timesUsed
+	 */
 	public void incrementTimesUsed() {
 		m_timesUsed++;
 	}
 	
+	/***
+	 * returns m_timesUsed
+	 * @return
+	 */
 	public int getTimesUsed() {
 		return m_timesUsed;
 	}
 	
+	/***
+	 * sets m_isRecent with the value of param recent
+	 * @param recent
+	 */
 	public void setIsRecent(int recent) {
 		m_isRecent = recent;
 	}
 	
+	/***
+	 * returns value of m_isRecent
+	 * @return
+	 */
 	public int getIsRecent() {
 		return m_isRecent;
 	}
