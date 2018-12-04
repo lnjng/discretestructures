@@ -78,11 +78,13 @@ public class GUI extends JFrame implements KeyListener {
 	 */
 	public void showLabels(String word, Container frame) {
 		State stateWord = automaton.getStateFromValue(word);
-	    JOptionPane.showMessageDialog(frame, 
-	        "Nombre de fois utilise : " + stateWord.getTimesUsed() + " \n Recemment utilise : " + stateWord.getIsRecent(),
-	        "Pour le mot " + word,
-	        JOptionPane.QUESTION_MESSAGE, 
-	        null);
+		if(stateWord != null) {
+		    JOptionPane.showMessageDialog(frame, 
+			        "Nombre de fois utilise : " + stateWord.getTimesUsed() + " \n Recemment utilise : " + stateWord.getIsRecent(),
+			        "Pour le mot " + word,
+			        JOptionPane.QUESTION_MESSAGE, 
+			        null);	
+		}
 	}
 
 	/***
@@ -108,44 +110,32 @@ public class GUI extends JFrame implements KeyListener {
 	 * 
 	 */
 	public void keyReleased(KeyEvent e) {
+		String punctuation = "([.,!?:;'\"-]|)+ \t \n \b ";
+		
 		// if the user is not backspacing
 		if(!(e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
 			String[] wordsSplitByPunc = textArea.getText().split("([.,!?:;'\"-]|\\s)+");
 			String lastWord = wordsSplitByPunc[wordsSplitByPunc.length - 1];
 			
-			// if the the word is a recognized word, words are only recognized the moment a comma or a space follows
-			if (automaton.getLexiconWords().contains(lastWord)) {
-			
-				// if the word is recent
-				if (automaton.getMostRecentWords().contains(lastWord)) {
-					
-					// the word moves up in the arrayqueue..
-					Object[] tempArray = automaton.getMostRecentWords().toArray();
-					int index = 0;
-					for (int i = 0 ; i < tempArray.length ; i++) {
-						if (tempArray[i].equals(lastWord)) {
-							index = i;
-							break;
-						}
-					}
-					swapReferences(tempArray, tempArray.length - 1 , index);
-
-					for(int i = index; i != tempArray.length-2; i++) {
-						swapReferences(tempArray, i, i+1);
-					}
-					automaton.getMostRecentWords().clear();
-					for (Object word : tempArray) {
-						automaton.getMostRecentWords().add((String) word);
-					}
-					// end percolating objects and transferring to the top of the q
-				}
+			// if the the word is a recognized word, words are only recognized the moment a punctuation of some sort follows
+			if (automaton.getLexiconWords().contains(lastWord) && punctuation.contains(String.valueOf(e.getKeyChar())) ) {
+				////////////////////
+				System.out.println("\n punctuation (" + e.getKeyChar() +") ! word recognized! \n");
+				////////////////////
 				
-				// if the word isn't recent
-				else {
-					automaton.addToLastUsedWords(lastWord);
-				}			
-				automaton.getStateFromValue(lastWord).incrementTimesUsed();		
-			}	
+				//adding the word to recently used words
+				automaton.addToLastUsedWords(lastWord);
+				
+				// increment only if the before last char entered is not a punctuation
+				String text = textArea.getText();
+				if (!punctuation.contains(text.substring(text.length() - 2, text.length() - 1))) {
+					automaton.getStateFromValue(lastWord).incrementTimesUsed();	
+					///////////////
+					System.out.println(lastWord + " INCREMENTED to " + automaton.getStateFromValue(lastWord).getTimesUsed() + "\n" );
+					//////////////
+				}
+			}
+			
 			
 			if(lastWord.length() != 0) {
 				showPossibleWords(lastWord);
@@ -160,19 +150,6 @@ public class GUI extends JFrame implements KeyListener {
 		else {
 			possibleWordsPane.setText("");
 		}	
-	}
-	
-	/**
-	 * swap references between to elements in an array
-	 * @param array
-	 * @param a
-	 * @param b
-	 */
-	static void swapReferences(Object[] array, int a, int b){
-	     Object x = array[a];
-	     array[a] = array[b];
-	     array[b] = x;
-
 	}
 	  
 	/**
