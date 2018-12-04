@@ -78,11 +78,13 @@ public class GUI extends JFrame implements KeyListener {
 	 */
 	public void showLabels(String word, Container frame) {
 		State stateWord = automaton.getStateFromValue(word);
-	    JOptionPane.showMessageDialog(frame, 
-	        "Nombre de fois utilise : " + stateWord.getTimesUsed() + " \n Recemment utilise : " + stateWord.getIsRecent(),
-	        "Pour le mot " + word,
-	        JOptionPane.QUESTION_MESSAGE, 
-	        null);
+		if(stateWord != null) {
+		    JOptionPane.showMessageDialog(frame, 
+			        "Nombre de fois utilise : " + stateWord.getTimesUsed() + " \n Recemment utilise : " + stateWord.getIsRecent(),
+			        "Pour le mot " + word,
+			        JOptionPane.QUESTION_MESSAGE, 
+			        null);	
+		}
 	}
 
 	/***
@@ -108,7 +110,6 @@ public class GUI extends JFrame implements KeyListener {
 	 * 
 	 */
 	public void keyReleased(KeyEvent e) {
-		// ici, //s marche pas pcq ca va reconnaitre "s".. weirdly
 		String punctuation = "([.,!?:;'\"-]|)+ \t \n \b ";
 		
 		// if the user is not backspacing
@@ -122,6 +123,7 @@ public class GUI extends JFrame implements KeyListener {
 				System.out.println("\n punctuation (" + e.getKeyChar() +") ! word recognized! \n");
 				////////////////////
 				
+				//adding the word to recently used words
 				automaton.addToLastUsedWords(lastWord);
 				
 				// increment only if the before last char entered is not a punctuation

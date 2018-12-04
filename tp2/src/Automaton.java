@@ -108,8 +108,8 @@ public class Automaton {
 	 */
 
 	public void addToLastUsedWords(String lastWord) {
+		//if the word is already in the 5 most recent ones
 		if (this.getMostRecentWords().contains(lastWord)) {
-			
 			// creating an equivalent array for easier manipulation
 			Object[] tempArray = this.getMostRecentWords().toArray();
 			int index = 0;
@@ -121,7 +121,6 @@ public class Automaton {
 			}
 			
 			if(tempArray.length > 1) {
-				
 				for(int i = index; i < tempArray.length - 1 ; i++) {
 					swapReferences(tempArray, i, i+1);
 				}
@@ -134,7 +133,6 @@ public class Automaton {
 			}
 			// end percolating objects and transferring to the top of the q
 		}
-		
 		// if the word isn't recent
 		else {
 			// polls and removes recent state
