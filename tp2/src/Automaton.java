@@ -107,22 +107,66 @@ public class Automaton {
 	 * @param lastUsedWord
 	 */
 
-	public void addToLastUsedWords(String lastUsedWord) {
-		// polls and removes recent state
-		if (m_mostRecentWords.size() == 5) {
-			String wordPolled = m_mostRecentWords.poll();
-			getStateFromValue(wordPolled).setIsRecent(0);
-			///////////
-			System.out.println(wordPolled + " set to non recent \n");
-			/////////
+	public void addToLastUsedWords(String lastWord) {
+		if (this.getMostRecentWords().contains(lastWord)) {
+			
+			// creating an equivalent array for easier manipulation
+			Object[] tempArray = this.getMostRecentWords().toArray();
+			int index = 0;
+			for (int i = 0 ; i < tempArray.length ; i++) {
+				if (tempArray[i].equals(lastWord)) {
+					index = i;
+					break;
+				}
+			}
+			
+			if(tempArray.length > 1) {
+				
+				for(int i = index; i < tempArray.length - 1 ; i++) {
+					swapReferences(tempArray, i, i+1);
+				}
+				
+				this.getMostRecentWords().clear();
+				for(Object word : tempArray) {
+					this.getMostRecentWords().add((String) word);
+				}
+				
+			}
+			// end percolating objects and transferring to the top of the q
 		}
-		m_mostRecentWords.add(lastUsedWord);
-		this.getStateFromValue(lastUsedWord).setIsRecent(1);
 		
-		////////////////////
-		System.out.println(lastUsedWord + " set to recent \n");
+		// if the word isn't recent
+		else {
+			// polls and removes recent state
+			if (m_mostRecentWords.size() == 5) {
+				String wordPolled = m_mostRecentWords.poll();
+				getStateFromValue(wordPolled).setIsRecent(0);
+				///////////
+				System.out.println(wordPolled + " set to non recent \n");
+				/////////
+			}
+			m_mostRecentWords.add(lastWord);
+			this.getStateFromValue(lastWord).setIsRecent(1);
+			
+			////////////////////
+			System.out.println(lastWord + " set to recent \n");
+			
+			System.out.print("size of mostRecentWords: " + m_mostRecentWords.size() + "\n");
+			//////////////////		}
 		
-		System.out.print("size of mostRecentWords: " + m_mostRecentWords.size() + "\n");
-		//////////////////
+		}
+	}
+	
+	/**
+	 * swap references between to elements in an array
+	 * @param array
+	 * @param a
+	 * @param b
+	 */
+	static void swapReferences(Object[] array, int a, int b){
+	     Object x = array[a];
+	     array[a] = array[b];
+	     array[b] = x;
+
 	}
 }

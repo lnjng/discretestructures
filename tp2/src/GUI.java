@@ -108,51 +108,21 @@ public class GUI extends JFrame implements KeyListener {
 	 * 
 	 */
 	public void keyReleased(KeyEvent e) {
-		// if the user is not backspacing
-		// maybe merge this punctuation variable with the wordssplibypunc code
 		// ici, //s marche pas pcq ca va reconnaitre "s".. weirdly
 		String punctuation = "([.,!?:;'\"-]|)+ \t \n \b ";
 		
+		// if the user is not backspacing
 		if(!(e.getKeyCode() == KeyEvent.VK_BACK_SPACE)) {
 			String[] wordsSplitByPunc = textArea.getText().split("([.,!?:;'\"-]|\\s)+");
 			String lastWord = wordsSplitByPunc[wordsSplitByPunc.length - 1];
+			
 			// if the the word is a recognized word, words are only recognized the moment a punctuation of some sort follows
 			if (automaton.getLexiconWords().contains(lastWord) && punctuation.contains(String.valueOf(e.getKeyChar())) ) {
 				////////////////////
 				System.out.println("\n punctuation! word recognized! : " + e.getKeyChar() +"\n");
 				////////////////////
-				// if the word is recent
-				if (automaton.getMostRecentWords().contains(lastWord)) {
-					
-					// creating an equivalent array for easier manipulation
-					Object[] tempArray = automaton.getMostRecentWords().toArray();
-					int index = 0;
-					for (int i = 0 ; i < tempArray.length ; i++) {
-						if (tempArray[i].equals(lastWord)) {
-							index = i;
-							break;
-						}
-					}
-					
-					if(tempArray.length > 1) {
-						
-						for(int i = index; i < tempArray.length - 1 ; i++) {
-							swapReferences(tempArray, i, i+1);
-						}
-						
-						automaton.getMostRecentWords().clear();
-						for(Object word : tempArray) {
-							automaton.getMostRecentWords().add((String) word);
-						}
-						
-					}
-					// end percolating objects and transferring to the top of the q
-				}
 				
-				// if the word isn't recent
-				else {
-					automaton.addToLastUsedWords(lastWord);
-				}
+				automaton.addToLastUsedWords(lastWord);
 				
 				// increment only if the before last char entered is not a punctuation
 				String text = textArea.getText();
@@ -178,19 +148,6 @@ public class GUI extends JFrame implements KeyListener {
 		else {
 			possibleWordsPane.setText("");
 		}	
-	}
-	
-	/**
-	 * swap references between to elements in an array
-	 * @param array
-	 * @param a
-	 * @param b
-	 */
-	static void swapReferences(Object[] array, int a, int b){
-	     Object x = array[a];
-	     array[a] = array[b];
-	     array[b] = x;
-
 	}
 	  
 	/**
