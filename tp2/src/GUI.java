@@ -119,7 +119,7 @@ public class GUI extends JFrame implements KeyListener {
 			// if the the word is a recognized word, words are only recognized the moment a punctuation of some sort follows
 			if (automaton.getLexiconWords().contains(lastWord) && punctuation.contains(String.valueOf(e.getKeyChar())) ) {
 				////////////////////
-				System.out.println("\n punctuation! word recognized! : " + e.getKeyChar() +"\n");
+				System.out.println("\n punctuation (" + e.getKeyChar() +") ! word recognized! \n");
 				////////////////////
 				
 				automaton.addToLastUsedWords(lastWord);
